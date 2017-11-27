@@ -1,0 +1,265 @@
+use Libraries.Game.Game
+use Libraries.Game.Graphics.Model
+use Libraries.Game.Graphics.AmbientLight
+use Libraries.Game.Graphics.DirectionalLight
+use Libraries.Game.Graphics.Color
+use Libraries.Compute.Vector3
+use Libraries.Interface.Events.KeyboardEvent
+use Libraries.Game.InputMonitor
+/*
+    This is a default class for creating a game in Quorum. Note that the Main 
+    action begins by calling StartGame(), which loads a window a game can 
+    be displayed in. The action CreateGame is where the game should load any 
+    assets, like images to be displayed, frames of animation, or sounds to be
+    played. 
+*/
+class Main is Game
+    Model boxer
+    Model cube
+    Color color
+    Model skynet
+    Vector3 preasure
+    InputMonitor hall
+    KeyboardEvent leafe
+    Model splicer
+    /*
+        This action, Main, starts our computer program. In Quorum, programs always
+        begin from Main.
+    */
+    action Main
+        StartGame()
+    end
+
+    /*
+        This action sets up the default values for a game. For example, we might
+        use the Libraries.Game.Graphics.Drawable class to load up an image or 
+        a shape. Or, we might add a Libraries.Interface.Button for making something clickable
+        or a Libraries.Interface.TextBox for gathering user input in a game.
+    */
+    action CreateGame
+    EnablePhysics3D(true)
+    boxer:LoadBox(1,1,1,color:Red())
+    boxer:SetPosition(-2,1,0)
+    boxer:EnablePhysics(true)
+    boxer:SetResponsive()
+    boxer:SetRestitution(0.5)
+    Add(boxer)
+
+    DirectionalLight light
+    light:SetColor(0.8,0.8,0.8,1)
+    light:SetDirection(GetCamera3D():GetDirection())
+    Add(light)
+    AmbientLight bulb
+    bulb:SetColor(0.4,0.4,0.4,1)
+    SetAmbientLight(bulb)
+
+    cube:LoadBox(20,1,15,color:Green())
+    cube:SetPosition(0,-5,0)
+    cube:EnablePhysics(true)
+    Add(cube)
+    cube:SetUnmovable()
+
+    skynet:LoadBox(1,1,1,color:Purple())    
+    skynet:SetPosition(2,1,0)
+    skynet:EnablePhysics(true)
+    skynet:SetResponsive()
+    skynet:SetRestitution(0.5)
+    Add(skynet)
+   
+    splicer:LoadSphere(0.5,0.5,0.5,color:White())
+    splicer:SetPosition(0,9,0)
+    splicer:EnablePhysics(true)
+    splicer:SetResponsive()
+    splicer:SetRestitution(0.5)
+    Add(splicer)
+    SetGravity3D(0,-10,0)
+    end
+
+    /*
+        The update action is called on every "frame" of animation in a game. This
+        action should be used to do operations on items. So, for example, we 
+        might use this action to change frames of animation, to rotate items, 
+        or to make creatures jump.
+    */
+    action Update(number seconds)
+
+    if hall:IsKeyPressed(leafe:NUM_2)
+        boxer:SetPosition(-2,1,0) 
+        skynet:SetPosition(2,1,0)
+        splicer:SetPosition(0,9,0)
+    end
+
+    if hall:IsKeyPressed(leafe:NUM_1)
+        Exit()
+    end
+
+    if hall:IsKeyPressed(leafe:UP)
+        preasure:Set(0,11,0)
+        skynet:ApplyForceToCenter(preasure)
+    end
+    
+    if hall:IsKeyPressed(leafe:DOWN)
+        preasure:Set(0,-11,0)
+        skynet:ApplyForceToCenter(preasure)
+    end
+
+    if hall:IsKeyPressed(leafe:LEFT)
+       preasure:Set(-2,0,0)
+       skynet:ApplyForceToCenter(preasure)
+    end
+
+    if hall:IsKeyPressed(leafe:RIGHT)
+       preasure:Set(2,0,0)
+       skynet:ApplyForceToCenter(preasure)
+       end
+
+
+    if hall:IsKeyPressed(leafe:M)
+         preasure:Set(0,0,-2)
+          skynet:ApplyForceToCenter(preasure)
+          end
+
+    if hall:IsKeyPressed(leafe:C)
+       preasure:Set(0,0,2)
+       skynet:ApplyForceToCenter(preasure)
+       end
+
+    if hall:IsKeyPressed(leafe:V)
+       preasure:Set(0,0,-2)
+       skynet:ApplyForceToCenter(preasure)
+       end
+
+    if hall:IsKeyPressed(leafe:W)
+       preasure:Set(0,11,0)
+       boxer:ApplyForceToCenter(preasure)
+       end
+
+    if hall:IsKeyPressed(leafe:S)
+        preasure:Set(0,-11,0)
+         boxer:ApplyForceToCenter(preasure)
+         end
+
+    if hall:IsKeyPressed(leafe:D)
+        preasure:Set(2,0,0)
+         boxer:ApplyForceToCenter(preasure)
+         end
+
+    if hall:IsKeyPressed(leafe:A)
+        preasure:Set(-2,0,0)
+         boxer:ApplyForceToCenter(preasure)
+         end
+
+    if hall:IsKeyPressed(leafe:Z)
+        preasure:Set(0,0,2)
+         boxer:ApplyForceToCenter(preasure)
+         end
+
+    if hall:IsKeyPressed(leafe:X)
+        preasure:Set(0,0,-2)
+         boxer:ApplyForceToCenter(preasure)
+         end
+    
+    if hall:IsKeyPressed(leafe:T)
+        preasure:Set(0,11,0)
+         splicer:ApplyForceToCenter(preasure)
+        end
+
+    if hall:IsKeyPressed(leafe:G)
+        preasure:Set(0,-11,0)
+         splicer:ApplyForceToCenter(preasure)
+        end
+    
+    if hall:IsKeyPressed(leafe:H)
+        preasure:Set(2,0,0)
+         splicer:ApplyForceToCenter(preasure)
+        end
+
+    if hall:IsKeyPressed(leafe:F)
+        preasure:Set(-2,0,0)
+         splicer:ApplyForceToCenter(preasure)
+        end
+
+    if hall:IsKeyPressed(leafe:B)
+        preasure:Set(0,0,2)
+         splicer:ApplyForceToCenter(preasure)
+        end
+
+    if hall:IsKeyPressed(leafe:N)
+        preasure:Set(0,0,-2)
+         splicer:ApplyForceToCenter(preasure)
+        end
+
+    if skynet:GetX() >10
+        skynet:SetX(0)
+        end
+    
+    if skynet:GetY() >8
+        skynet:SetY(0)
+        end
+
+    if skynet:GetX() <-10
+        skynet:SetX(0)
+        end
+
+    if skynet:GetY() <-8
+        skynet:SetY(0)
+        end
+     
+    if skynet:GetZ() >4
+        skynet:SetZ(0)
+        end
+         
+    if skynet:GetZ() <-4
+        skynet:SetZ(0)
+        end
+    
+    if boxer:GetX() >10
+        boxer:SetX(0)
+        end
+
+    if boxer:GetY() >8
+        boxer:SetY(0)
+        end
+
+    if boxer:GetX() <-10
+        boxer:SetX(0)
+        end
+
+    if boxer:GetY() <-8
+        boxer:SetY(0)
+        end
+
+    if boxer:GetZ() >4
+        boxer:SetZ(0)
+        end
+
+    if boxer:GetZ() <-4
+        boxer:SetZ(0)
+        end
+
+    if splicer:GetX() >10
+        splicer:SetX(0)
+         end 
+
+    if splicer:GetY() >8
+        splicer:SetY(0)
+        end 
+    
+    if splicer:GetX() <-10 or hall:IsKeyPressed(leafe:SPACE)
+        splicer:SetX(0)
+        end  
+
+    if splicer:GetY() <-8
+        splicer:SetY(0)
+        end
+
+    if splicer:GetZ() >4
+        splicer:SetZ(0)
+        end 
+
+    if splicer:GetZ()  <-4
+        splicer:SetZ(0)
+        end
+
+end
+    end
